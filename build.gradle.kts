@@ -32,6 +32,7 @@
         implementation("io.ktor:ktor-server-netty:$ktor_version")
         implementation("ch.qos.logback:logback-classic:$logback_version")
         implementation("io.ktor:ktor-gson:$ktor_version")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.30")
         testImplementation("io.ktor:ktor-server-tests:$ktor_version")
         testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 

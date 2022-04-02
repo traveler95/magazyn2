@@ -39,12 +39,20 @@ fun Application.module() {
         val repository: ToDoRepository = MySQLTodoRepository()
 
 
-        get("/") {
-            call.respondText { "kk" }
-        }
+        //get("/") {
+          //  call.respondText { "kk" }
+        //}
+
+
+
+
         get("/todos") {
             call.respond(repository.getAllToDos())
         }
+
+
+
+
 
         get("/todos/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
@@ -66,12 +74,18 @@ fun Application.module() {
             }
         }
 
+
+
+
         post("/todos") {
 
             val toDoDraft = call.receive<ToDoDraft>()
         val todo = repository.addToDo(toDoDraft)
         call.respond(todo )
         }
+
+
+
 
         put("/todos/{id}") {
             val toDoDraft = call.receive<ToDoDraft>()
@@ -89,6 +103,8 @@ fun Application.module() {
             }
         }
 
+
+
         delete("/todos/{id}") {
             val todoId = call.parameters["id"]?.toIntOrNull()
 
@@ -102,8 +118,8 @@ fun Application.module() {
             } else {
                 call.respond(HttpStatusCode.NotFound)
             }
-
         }
+
 
     }
 
