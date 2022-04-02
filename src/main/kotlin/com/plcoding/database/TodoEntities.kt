@@ -10,7 +10,7 @@ object DBTodoTable: Table<DBTodoEntity>("todo"){
 
     val id = int("id").primaryKey().bindTo {  it.id}
     val title = varchar("title").bindTo { it.title }
-    val done = boolean("done").bindTo { it.done }
+    val ilosc = int("ilosc").bindTo { it.ilosc }
 
 }
 
@@ -21,5 +21,5 @@ interface DBTodoEntity: Entity<DBTodoEntity>{
     companion object : Entity.Factory<DBTodoEntity>()
     val id: Int
     val title: String
-    val done: Boolean
+    val ilosc: Int
 }

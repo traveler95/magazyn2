@@ -1,8 +1,7 @@
-package com.plcoding.repository
+/*package com.plcoding.repository
 
 import com.plcoding.data.model.ToDo
 import com.plcoding.data.model.ToDoDraft
-import io.ktor.sessions.*
 
 class InMemoryToDoRepository: ToDoRepository {
 
@@ -27,7 +26,7 @@ class InMemoryToDoRepository: ToDoRepository {
         val todo = ToDo(
             id = todos.size +1 ,
             title = draft.title,
-            done = draft.done
+            ilosc = draft.ilosc
         )
         todos.add(todo)
         return todo
@@ -44,10 +43,10 @@ class InMemoryToDoRepository: ToDoRepository {
 
 
         todo.title = draft.title
-        todo.done = draft.done
+        todo.ilosc = draft.ilosc
         return true
 
     }
 
 
-}
+}*/

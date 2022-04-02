@@ -10,12 +10,12 @@ class MySQLTodoRepository: ToDoRepository {
 
 
     override fun getAllToDos(): List<ToDo> {
-        return database.getAllTodos().map { ToDo(it.id, it.title, it.done)}
+        return database.getAllTodos().map { ToDo(it.id, it.title, it.ilosc)}
     }
 
     override fun getToDo(id: Int): ToDo? {
         return database.getTodo(id)
-            ?.let { ToDo(it.id, it.title, it.done) }
+            ?.let { ToDo(it.id, it.title, it.ilosc) }
     }
 
     override fun addToDo(draft: ToDoDraft): ToDo {

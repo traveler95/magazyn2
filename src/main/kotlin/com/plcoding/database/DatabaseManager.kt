@@ -47,9 +47,9 @@ class DatabaseManager {
 
         val insertedId = ktormDatabase.insertAndGenerateKey(DBTodoTable){
             set(DBTodoTable.title, draft.title)
-            set(DBTodoTable.done, draft.done)
+            set(DBTodoTable.ilosc, draft.ilosc)
         }as Int
-        return ToDo(insertedId, draft.title, draft.done
+        return ToDo(insertedId, draft.title, draft.ilosc
         )
     }
 
@@ -59,7 +59,7 @@ class DatabaseManager {
     fun updateTodo(id: Int, draft: ToDoDraft): Boolean{
         val updatedRows = ktormDatabase.update(DBTodoTable){
             set(DBTodoTable.title, draft.title)
-            set(DBTodoTable.done, draft.done)
+            set(DBTodoTable.ilosc, draft.ilosc)
             where {
                 it.id eq id
             }

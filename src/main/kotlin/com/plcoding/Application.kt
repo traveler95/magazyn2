@@ -4,7 +4,6 @@ import com.plcoding.data.model.ToDo
 import com.plcoding.data.model.ToDoDraft
 import io.ktor.application.*
 import com.plcoding.plugins.*
-import com.plcoding.repository.InMemoryToDoRepository
 import com.plcoding.repository.MySQLTodoRepository
 import com.plcoding.repository.ToDoRepository
 import com.typesafe.config.ConfigException.Null
