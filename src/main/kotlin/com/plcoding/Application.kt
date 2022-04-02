@@ -24,7 +24,9 @@ fun Application.module() {
     configureRouting()
     // configureSerialization()
     //configureMonitoring()
-
+    install(CORS) {
+        anyHost()
+    }
     install(CallLogging)
     install(ContentNegotiation) {
         gson {
@@ -63,7 +65,7 @@ fun Application.module() {
 
             val todo = repository.getToDo(id)
             if (todo == null) {
-                call.respond(HttpStatusCode.NotFound, "not found todo")
+                call.respond(HttpStatusCode.NotFound, "Nie znaleziono materiału o takim ID")
             } else {
                 call.respond(todo)
             }
