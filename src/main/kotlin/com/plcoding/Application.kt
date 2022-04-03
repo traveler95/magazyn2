@@ -15,17 +15,22 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 import io.ktor.serialization.*
+import java.time.Duration
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from marking it as unused.
 fun Application.module() {
-    configureRouting()
-    // configureSerialization()
+    //configureRouting()
+    //configureSerialization()
     //configureMonitoring()
+    install(DefaultHeaders)
     install(CORS) {
+        maxAge = Duration.ofDays(1)
         anyHost()
+        exposeHeader("Accept")
+        exposeHeader("Content-Type")
     }
     install(CallLogging)
     install(ContentNegotiation) {
@@ -40,9 +45,9 @@ fun Application.module() {
         val repository: ToDoRepository = MySQLTodoRepository()
 
 
-        //get("/") {
-          //  call.respondText { "kk" }
-        //}
+        get("/") {
+            call.respondText { "kk" }
+        }
 
 
 
@@ -82,7 +87,10 @@ fun Application.module() {
 
             val toDoDraft = call.receive<ToDoDraft>()
         val todo = repository.addToDo(toDoDraft)
-        call.respond(todo )
+            call.response.header("Accept", "application/json")
+            //call.response.header("Content-Type", "application/json")
+        call.respond(todo)
+
         }
 
 

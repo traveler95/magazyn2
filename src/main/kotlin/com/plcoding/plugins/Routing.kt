@@ -12,7 +12,7 @@ import io.ktor.request.*
 fun Application.configureRouting() {
     routing {
         get("/")  {
-            call.respondText("Hello Wrold!")
+            call.respondText("Status: OK")
         }
         randomRabbit()
         // Static plugin. Try to access `/static/index.html`
