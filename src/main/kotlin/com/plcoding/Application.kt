@@ -27,8 +27,12 @@ fun Application.module() {
     //configureMonitoring()
     install(DefaultHeaders)
     install(CORS) {
+        method(HttpMethod.Options)
+        method(HttpMethod.Post)
+        method(HttpMethod.Get)
+        allowNonSimpleContentTypes = true // <-
+        anyHost() //
         maxAge = Duration.ofDays(1)
-        anyHost()
         exposeHeader("Accept")
         exposeHeader("Content-Type")
     }
