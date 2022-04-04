@@ -26,15 +26,15 @@
     }
 
     dependencies {
-        implementation("io.ktor:ktor-server-core:$ktor_version")
-        implementation("io.ktor:ktor-serialization:$ktor_version")
-        implementation("io.ktor:ktor-server-host-common:$ktor_version")
+       // implementation("io.ktor:ktor-server-core:$ktor_version")
+       // implementation("io.ktor:ktor-serialization:$ktor_version")
+       // implementation("io.ktor:ktor-server-host-common:$ktor_version")
         implementation("io.ktor:ktor-server-netty:$ktor_version")
         implementation("ch.qos.logback:logback-classic:$logback_version")
         implementation("io.ktor:ktor-gson:$ktor_version")
-        implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.30")
+      //  implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.30")
         testImplementation("io.ktor:ktor-server-tests:$ktor_version")
-        testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+       // testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 
         //database
         implementation("mysql:mysql-connector-java:8.0.11")

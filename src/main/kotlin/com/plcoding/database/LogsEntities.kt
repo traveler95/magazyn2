@@ -2,9 +2,7 @@ package com.plcoding.database
 
 import org.ktorm.entity.Entity
 import org.ktorm.schema.Table
-import org.ktorm.schema.date
 import org.ktorm.schema.int
-import java.time.LocalDate
 
 object DBLogsTable: Table<DBLogsEntity>("logs"){
 

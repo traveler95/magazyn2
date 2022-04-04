@@ -1,6 +1,5 @@
 package com.plcoding.data.model
 
-import java.time.LocalDate
 
 data class LogDraft(
     //val date: LocalDate,
