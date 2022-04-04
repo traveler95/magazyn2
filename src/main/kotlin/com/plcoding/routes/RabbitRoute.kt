@@ -1,6 +1,5 @@
 package com.plcoding.routes
 
-import com.plcoding.data.model.ToDo
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*

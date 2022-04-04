@@ -1,21 +1,16 @@
 package com.plcoding
 
-import com.plcoding.data.model.ToDo
-import com.plcoding.data.model.ToDoDraft
+import com.plcoding.data.model.LogDraft
+import com.plcoding.data.model.MaterialDraft
 import io.ktor.application.*
-import com.plcoding.plugins.*
-import com.plcoding.repository.MySQLTodoRepository
-import com.plcoding.repository.ToDoRepository
-import com.typesafe.config.ConfigException.Null
+import com.plcoding.repository.MySQLMaterialRepository
+import com.plcoding.repository.MaterialRepository
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-
-import io.ktor.serialization.*
-import java.time.Duration
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -32,7 +27,6 @@ fun Application.module() {
         method(HttpMethod.Get)
         allowNonSimpleContentTypes = true // <-
         anyHost() //
-        maxAge = Duration.ofDays(1)
         exposeHeader("Accept")
         exposeHeader("Content-Type")
     }
@@ -46,25 +40,26 @@ fun Application.module() {
     routing {
 
 
-        val repository: ToDoRepository = MySQLTodoRepository()
+        val repository: MaterialRepository = MySQLMaterialRepository()
 
 
         get("/") {
-            call.respondText { "kk" }
+            call.respondText { "Status: OK" }
         }
 
 
 
 
-        get("/todos") {
-            call.respond(repository.getAllToDos())
+        get("/materials") {
+            call.respond(repository.getAllMaterials())
+        }
+
+        get("/logs") {
+            call.respond(repository.getAllLogs())
         }
 
 
-
-
-
-        get("/todos/{id}") {
+        get("/material/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
 
             if (id == null) {
@@ -72,7 +67,7 @@ fun Application.module() {
                 return@get
             }
 
-            val todo = repository.getToDo(id)
+            val todo = repository.getMaterial(id)
             if (todo == null) {
                 call.respond(HttpStatusCode.NotFound, "Nie znaleziono materiału o takim ID")
             } else {
@@ -87,45 +82,54 @@ fun Application.module() {
 
 
 
-        post("/todos") {
+        post("/material") {
 
-            val toDoDraft = call.receive<ToDoDraft>()
-        val todo = repository.addToDo(toDoDraft)
+            val materialDraft = call.receive<MaterialDraft>()
+            val todo = repository.addMaterial(materialDraft)
             call.response.header("Accept", "application/json")
             //call.response.header("Content-Type", "application/json")
-        call.respond(todo)
+            call.respond(todo)
+
+        }
+
+        post("/log") {
+
+            val logDraft = call.receive<LogDraft>()
+            val log = repository.addLog(logDraft)
+            call.response.header("Accept", "application/json")
+            call.respond(log)
 
         }
 
 
 
+        put("/material/{id}") {
+            val materialDraft = call.receive<MaterialDraft>()
+            val materialId = call.parameters["id"]?.toIntOrNull()
+           // val logDraft = call.receive<LogDraft>()
 
-        put("/todos/{id}") {
-            val toDoDraft = call.receive<ToDoDraft>()
-            val todoId = call.parameters["id"]?.toIntOrNull()
-
-            if (todoId == null){
-                call.respond(HttpStatusCode.BadRequest,"kokoko")
+            if (materialId == null) {
+                call.respond(HttpStatusCode.BadRequest, "kokoko")
                 return@put
             }
-            val updated = repository.updateToDo(todoId, toDoDraft)
+            val updated = repository.updateMaterial(materialId, materialDraft)
             if (updated) {
                 call.respond(HttpStatusCode.OK)
             } else {
-                call.respond(HttpStatusCode.NotFound,"not found")
+                call.respond(HttpStatusCode.NotFound, "not found")
             }
         }
 
 
 
-        delete("/todos/{id}") {
+        delete("/material/{id}") {
             val todoId = call.parameters["id"]?.toIntOrNull()
 
-            if (todoId == null){
-                call.respond(HttpStatusCode.BadRequest,"kokoko")
+            if (todoId == null) {
+                call.respond(HttpStatusCode.BadRequest, "kokoko")
                 return@delete
             }
-            val removed = repository.removeToDo(todoId)
+            val removed = repository.removeMaterial(todoId)
             if (removed) {
                 call.respond(HttpStatusCode.OK)
             } else {

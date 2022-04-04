@@ -3,11 +3,11 @@ package com.plcoding.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ToDo(
+data class Material(
 
     val id: Int,
-    var title: String,
-    var ilosc: Int,
+    var name: String,
+    var qty: Int,
 
     )
 

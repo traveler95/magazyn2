@@ -1,7 +1,9 @@
 package com.plcoding.database
 
-import com.plcoding.data.model.ToDo
-import com.plcoding.data.model.ToDoDraft
+import com.plcoding.data.model.Log
+import com.plcoding.data.model.LogDraft
+import com.plcoding.data.model.Material
+import com.plcoding.data.model.MaterialDraft
 import org.ktorm.database.Database
 import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
@@ -29,41 +31,65 @@ class DatabaseManager {
 
 
 
-    fun getAllTodos(): List<DBTodoEntity> {
-        return ktormDatabase.sequenceOf(DBTodoTable).toList()
+    fun getAllMaterials(): List<DBMaterialEntity> {
+        return ktormDatabase.sequenceOf(DBMaterialTable).toList()
+    }
+
+    fun getAllLogs(): List<DBLogsEntity> {
+        return ktormDatabase.sequenceOf(DBLogsTable).toList()
     }
 
 
 
 
-    fun getTodo(id: Int): DBTodoEntity? {
-        return ktormDatabase.sequenceOf(DBTodoTable).firstOrNull { it.id eq id }
+    fun getMaterial(id: Int): DBMaterialEntity? {
+        return ktormDatabase.sequenceOf(DBMaterialTable).firstOrNull { it.id eq id }
     }
 
 
 
 
-    fun addTodo(draft: ToDoDraft): ToDo{
+    fun addMaterial(draft: MaterialDraft): Material{
 
-        val insertedId = ktormDatabase.insertAndGenerateKey(DBTodoTable){
-            set(DBTodoTable.title, draft.title)
-            set(DBTodoTable.ilosc, draft.ilosc)
+        val insertedId = ktormDatabase.insertAndGenerateKey(DBMaterialTable){
+            set(DBMaterialTable.name, draft.name)
+            set(DBMaterialTable.qty, draft.qty)
         }as Int
-        return ToDo(insertedId, draft.title, draft.ilosc
-        )
+        return Material(insertedId, draft.name, draft.qty)
+    }
+
+    fun addLog(draft: LogDraft): Log {
+
+        val insertedId = ktormDatabase.insertAndGenerateKey(DBLogsTable){
+           // set(DBLogsTable.date, draft.date)
+            set(DBLogsTable.materialid, draft.materialid)
+            set(DBLogsTable.userid, draft.userid)
+            set(DBLogsTable.contractorid, draft.contractorid)
+        }as Int
+        return Log(insertedId, draft.materialid, draft.userid, draft.contractorid)
     }
 
 
 
 
-    fun updateTodo(id: Int, draft: ToDoDraft): Boolean{
-        val updatedRows = ktormDatabase.update(DBTodoTable){
-            set(DBTodoTable.title, draft.title)
-            set(DBTodoTable.ilosc, draft.ilosc)
+    fun updateMaterial(id: Int, draft: MaterialDraft): Boolean{
+        val updatedRows = ktormDatabase.update(DBMaterialTable){
+            set(DBMaterialTable.name, draft.name)
+            set(DBMaterialTable.qty, draft.qty)
             where {
                 it.id eq id
             }
         }
+
+
+
+        /*
+        ktormDatabase.insertAndGenerateKey(DBLogsTable){
+            set(DBLogsTable.materialid, log.materialid)
+            set(DBLogsTable.userid, log.userid)
+            set(DBLogsTable.contractorid, log.contractorid)
+        }as Int
+*/
         return updatedRows>0
     }
 
@@ -71,8 +97,8 @@ class DatabaseManager {
 
 
 
-    fun removeTodo(id: Int): Boolean{
-        val deletedRows=ktormDatabase.delete(DBTodoTable){
+    fun removeMaterial(id: Int): Boolean{
+        val deletedRows=ktormDatabase.delete(DBMaterialTable){
             it.id eq id
         }
         return deletedRows>0
