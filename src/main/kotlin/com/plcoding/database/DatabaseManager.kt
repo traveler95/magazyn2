@@ -18,7 +18,7 @@ class DatabaseManager {
     private val hostname = "mysql37.mydevil.net"
     private val databaseName = "m1521_magazyn"
     private val username = "m1521_etraveler"
-    private val password = "Kjkszyj45"
+    private val password = "Zaq!2wsx"
     private val ktormDatabase: Database
 
 
