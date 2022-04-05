@@ -1,9 +1,6 @@
 package com.plcoding.database
 
-import com.plcoding.data.model.Log
-import com.plcoding.data.model.LogDraft
-import com.plcoding.data.model.Material
-import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.*
 import org.ktorm.database.Database
 import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
@@ -31,6 +28,7 @@ class DatabaseManager {
 
 
 
+
     fun getAllMaterials(): List<DBMaterialEntity> {
         return ktormDatabase.sequenceOf(DBMaterialTable).toList()
     }
@@ -39,18 +37,11 @@ class DatabaseManager {
         return ktormDatabase.sequenceOf(DBLogsTable).toList()
     }
 
-
-
-
     fun getMaterial(id: Int): DBMaterialEntity? {
         return ktormDatabase.sequenceOf(DBMaterialTable).firstOrNull { it.id eq id }
     }
 
-
-
-
     fun addMaterial(draft: MaterialDraft): Material{
-
         val insertedId = ktormDatabase.insertAndGenerateKey(DBMaterialTable){
             set(DBMaterialTable.name, draft.name)
             set(DBMaterialTable.qty, draft.qty)
@@ -59,7 +50,6 @@ class DatabaseManager {
     }
 
     fun addLog(draft: LogDraft): Log {
-
         val insertedId = ktormDatabase.insertAndGenerateKey(DBLogsTable){
            // set(DBLogsTable.date, draft.date)
             set(DBLogsTable.materialid, draft.materialid)
@@ -69,10 +59,7 @@ class DatabaseManager {
         return Log(insertedId, draft.materialid, draft.userid, draft.contractorid)
     }
 
-
-
-
-    fun updateMaterial(id: Int, draft: MaterialDraft): Boolean{
+    fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean{
         val updatedRows = ktormDatabase.update(DBMaterialTable){
             set(DBMaterialTable.name, draft.name)
             set(DBMaterialTable.qty, draft.qty)
@@ -80,22 +67,17 @@ class DatabaseManager {
                 it.id eq id
             }
         }
-
-
-
-        /*
-        ktormDatabase.insertAndGenerateKey(DBLogsTable){
-            set(DBLogsTable.materialid, log.materialid)
-            set(DBLogsTable.userid, log.userid)
-            set(DBLogsTable.contractorid, log.contractorid)
-        }as Int
-*/
+        updateLog(draft.userid,draft.materialid,draft.contractorid)
         return updatedRows>0
     }
 
-
-
-
+fun updateLog(a: Int, b: Int ,c: Int){
+    ktormDatabase.insertAndGenerateKey(DBLogsTable){
+        set(DBLogsTable.materialid, a)
+        set(DBLogsTable.userid, b)
+        set(DBLogsTable.contractorid, c)
+    }
+}
 
     fun removeMaterial(id: Int): Boolean{
         val deletedRows=ktormDatabase.delete(DBMaterialTable){

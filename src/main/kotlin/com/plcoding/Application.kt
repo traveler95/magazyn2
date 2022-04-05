@@ -2,6 +2,7 @@ package com.plcoding
 
 import com.plcoding.data.model.LogDraft
 import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.MaterialLogDraft
 import io.ktor.application.*
 import com.plcoding.repository.MySQLMaterialRepository
 import com.plcoding.repository.MaterialRepository
@@ -31,9 +32,12 @@ fun Application.module() {
         exposeHeader("Content-Type")
     }
     install(CallLogging)
+    install(DoubleReceive){
+        receiveEntireContent
+
+    }
     install(ContentNegotiation) {
         gson {
-
         }
     }
 
@@ -47,9 +51,6 @@ fun Application.module() {
             call.respondText { "Status: OK" }
         }
 
-
-
-
         get("/materials") {
             call.respond(repository.getAllMaterials())
         }
@@ -57,7 +58,6 @@ fun Application.module() {
         get("/logs") {
             call.respond(repository.getAllLogs())
         }
-
 
         get("/material/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
@@ -79,34 +79,25 @@ fun Application.module() {
             }
         }
 
-
-
-
         post("/material") {
-
             val materialDraft = call.receive<MaterialDraft>()
             val todo = repository.addMaterial(materialDraft)
             call.response.header("Accept", "application/json")
-            //call.response.header("Content-Type", "application/json")
+            call.response.header("Content-Type", "application/json")
             call.respond(todo)
-
         }
 
         post("/log") {
-
             val logDraft = call.receive<LogDraft>()
             val log = repository.addLog(logDraft)
             call.response.header("Accept", "application/json")
             call.respond(log)
-
         }
 
-
-
         put("/material/{id}") {
-            val materialDraft = call.receive<MaterialDraft>()
+            val materialDraft = call.receive<MaterialLogDraft>()
             val materialId = call.parameters["id"]?.toIntOrNull()
-           // val logDraft = call.receive<LogDraft>()
+            //val logDraft = call.receive<LogDraft>()
 
             if (materialId == null) {
                 call.respond(HttpStatusCode.BadRequest, "kokoko")
@@ -114,13 +105,13 @@ fun Application.module() {
             }
             val updated = repository.updateMaterial(materialId, materialDraft)
             if (updated) {
+                call.response.header("Accept", "application/json")
+                call.response.header("Content-Type", "application/json")
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.NotFound, "not found")
             }
         }
-
-
 
         delete("/material/{id}") {
             val todoId = call.parameters["id"]?.toIntOrNull()
@@ -136,8 +127,5 @@ fun Application.module() {
                 call.respond(HttpStatusCode.NotFound)
             }
         }
-
-
     }
-
 }

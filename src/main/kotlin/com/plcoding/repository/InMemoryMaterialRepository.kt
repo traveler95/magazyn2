@@ -1,9 +1,6 @@
 package com.plcoding.repository
 
-import com.plcoding.data.model.Log
-import com.plcoding.data.model.LogDraft
-import com.plcoding.data.model.Material
-import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.*
 
 class InMemoryMaterialRepository: MaterialRepository {
 
@@ -47,7 +44,7 @@ class InMemoryMaterialRepository: MaterialRepository {
         return todos.removeIf{ it.id ==id}
     }
 
-    override fun updateMaterial(id: Int, draft: MaterialDraft): Boolean {
+    override fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean {
         val todo = todos.firstOrNull{ it.id == id}
             ?: return false
 

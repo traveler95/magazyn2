@@ -1,9 +1,6 @@
 package com.plcoding.repository
 
-import com.plcoding.data.model.Log
-import com.plcoding.data.model.LogDraft
-import com.plcoding.data.model.Material
-import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.*
 import com.plcoding.database.DatabaseManager
 
 class MySQLMaterialRepository: MaterialRepository {
@@ -40,7 +37,7 @@ class MySQLMaterialRepository: MaterialRepository {
     }
 
 
-    override fun updateMaterial(id: Int, draft: MaterialDraft): Boolean {
+    override fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean {
         return database.updateMaterial(id,draft)
 
     }

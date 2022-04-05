@@ -1,9 +1,6 @@
 package com.plcoding.repository
 
-import com.plcoding.data.model.Log
-import com.plcoding.data.model.LogDraft
-import com.plcoding.data.model.Material
-import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.*
 
 interface MaterialRepository {
 
@@ -20,7 +17,7 @@ interface MaterialRepository {
 
     fun removeMaterial(id: Int): Boolean
 
-    fun updateMaterial(id: Int, draft: MaterialDraft): Boolean
+    fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean
 
 
 }
