@@ -26,6 +26,7 @@ fun Application.module() {
         method(HttpMethod.Options)
         method(HttpMethod.Post)
         method(HttpMethod.Get)
+        method(HttpMethod.Put)
         allowNonSimpleContentTypes = true // <-
         anyHost() //
         exposeHeader("Accept")
@@ -106,7 +107,7 @@ fun Application.module() {
             val updated = repository.updateMaterial(materialId, materialDraft)
             if (updated) {
                 call.response.header("Accept", "application/json")
-                call.response.header("Content-Type", "application/json")
+               // call.response.header("Content-Type", "application/json")
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.NotFound, "not found")
