@@ -36,7 +36,7 @@ class InMemoryMaterialRepository: MaterialRepository {
 
     }
 
-    override fun addLog(draft: LogDraft): Log {
+    override fun addLog(draft: LogDraft): LogDraft {
         TODO("Not yet implemented")
     }
 

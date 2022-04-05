@@ -13,7 +13,7 @@ interface MaterialRepository {
 
     fun addMaterial(draft: MaterialDraft): Material
 
-    fun addLog(draft: LogDraft): Log
+    fun addLog(draft: LogDraft): LogDraft
 
     fun removeMaterial(id: Int): Boolean
 

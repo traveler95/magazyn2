@@ -28,7 +28,6 @@ class DatabaseManager {
 
 
 
-
     fun getAllMaterials(): List<DBMaterialEntity> {
         return ktormDatabase.sequenceOf(DBMaterialTable).toList()
     }
@@ -36,6 +35,9 @@ class DatabaseManager {
     fun getAllLogs(): List<DBLogsEntity> {
         return ktormDatabase.sequenceOf(DBLogsTable).toList()
     }
+
+
+
 
     fun getMaterial(id: Int): DBMaterialEntity? {
         return ktormDatabase.sequenceOf(DBMaterialTable).firstOrNull { it.id eq id }
@@ -49,14 +51,14 @@ class DatabaseManager {
         return Material(insertedId, draft.name, draft.qty)
     }
 
-    fun addLog(draft: LogDraft): Log {
+    fun addLog(draft: LogDraft): LogDraft {
         val insertedId = ktormDatabase.insertAndGenerateKey(DBLogsTable){
            // set(DBLogsTable.date, draft.date)
             set(DBLogsTable.materialid, draft.materialid)
             set(DBLogsTable.userid, draft.userid)
             set(DBLogsTable.contractorid, draft.contractorid)
         }as Int
-        return Log(insertedId, draft.materialid, draft.userid, draft.contractorid)
+        return LogDraft(draft.materialid, draft.userid, draft.contractorid)
     }
 
     fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean{
