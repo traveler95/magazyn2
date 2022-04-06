@@ -5,6 +5,7 @@ data class Material(
     val id: Int,
     var name: String,
     var qty: Int,
+    var sn: String
 
     )
 

@@ -10,6 +10,7 @@ object DBMaterialTable: Table<DBMaterialEntity>("material"){
     val id = int("id").primaryKey().bindTo {  it.id}
     val name = varchar("name").bindTo { it.name }
     val qty = int("qty").bindTo { it.qty }
+    val sn = varchar("sn").bindTo { it.sn }
 
 }
 
@@ -21,4 +22,5 @@ interface DBMaterialEntity: Entity<DBMaterialEntity>{
     val id: Int
     val name: String
     val qty: Int
+    val sn: String
 }

@@ -6,5 +6,6 @@ data class MaterialLogDraft(
     val userid: Int,
     val contractorid: Int,
     val materialid: Int,
-    val type: String
+    val type: String,
+    val sn: String
 )

@@ -9,7 +9,7 @@ class MySQLMaterialRepository: MaterialRepository {
 
 
     override fun getAllMaterials(): List<Material> {
-        return database.getAllMaterials().map { Material(it.id, it.name, it.qty)}
+        return database.getAllMaterials().map { Material(it.id, it.name, it.qty, it.sn)}
     }
 
     override fun getAllLogs(): List<Log> {
@@ -18,7 +18,7 @@ class MySQLMaterialRepository: MaterialRepository {
 
     override fun getMaterial(id: Int): Material? {
         return database.getMaterial(id)
-            ?.let { Material(it.id, it.name, it.qty) }
+            ?.let { Material(it.id, it.name, it.qty, it.sn) }
     }
 
     override fun addMaterial(draft: MaterialDraft): Material {
@@ -39,6 +39,9 @@ class MySQLMaterialRepository: MaterialRepository {
 
     override fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean {
         return database.updateMaterial(id,draft)
+    }
 
+    override fun materialDelivery(id: Int, draft: MaterialLogDeliveryDraft): Boolean {
+        return database.materialDelivery(id,draft)
     }
 }

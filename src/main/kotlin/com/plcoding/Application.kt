@@ -2,6 +2,7 @@ package com.plcoding
 
 import com.plcoding.data.model.LogDraft
 import com.plcoding.data.model.MaterialDraft
+import com.plcoding.data.model.MaterialLogDeliveryDraft
 import com.plcoding.data.model.MaterialLogDraft
 import io.ktor.application.*
 import com.plcoding.repository.MySQLMaterialRepository
@@ -98,7 +99,6 @@ fun Application.module() {
         put("/material/{id}") {
             val materialDraft = call.receive<MaterialLogDraft>()
             val materialId = call.parameters["id"]?.toIntOrNull()
-            //val logDraft = call.receive<LogDraft>()
 
             if (materialId == null) {
                 call.respond(HttpStatusCode.BadRequest, "kokoko")
@@ -107,7 +107,25 @@ fun Application.module() {
             val updated = repository.updateMaterial(materialId, materialDraft)
             if (updated) {
                 call.response.header("Accept", "application/json")
-               // call.response.header("Content-Type", "application/json")
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respond(HttpStatusCode.NotFound, "not found")
+            }
+        }
+
+
+
+        put("/dostawa/{id}") {
+            val materialDraft = call.receive<MaterialLogDeliveryDraft>()
+            val materialId = call.parameters["id"]?.toIntOrNull()
+
+            if (materialId == null) {
+                call.respond(HttpStatusCode.BadRequest, "kokoko")
+                return@put
+            }
+            val updated = repository.materialDelivery(materialId, materialDraft)
+            if (updated) {
+                call.response.header("Accept", "application/json")
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.NotFound, "not found")

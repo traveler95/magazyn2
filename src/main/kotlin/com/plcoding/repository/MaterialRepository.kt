@@ -19,5 +19,7 @@ interface MaterialRepository {
 
     fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean
 
+    fun materialDelivery(id: Int, draft: MaterialLogDeliveryDraft): Boolean
+
 
 }

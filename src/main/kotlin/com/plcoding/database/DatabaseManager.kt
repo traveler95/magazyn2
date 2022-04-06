@@ -48,7 +48,7 @@ class DatabaseManager {
             set(DBMaterialTable.name, draft.name)
             set(DBMaterialTable.qty, draft.qty)
         }as Int
-        return Material(insertedId, draft.name, draft.qty)
+        return Material(insertedId, draft.name, draft.qty, draft.sn)
     }
 
     fun addLog(draft: LogDraft): LogDraft {
@@ -74,14 +74,26 @@ class DatabaseManager {
         return updatedRows>0
     }
 
-fun updateLog(a: Int, b: Int ,c: Int,d: String){
+
+    fun materialDelivery(id: Int, draft: MaterialLogDeliveryDraft): Boolean{
+        val updatedRows = ktormDatabase.update(DBMaterialTable){
+            set(DBMaterialTable.qty, draft.qty)
+            where {
+                it.id eq id
+            }
+        }
+       // updateLog(draft.userid,draft.materialid,draft.contractorid,draft.type)
+        return updatedRows>0
+    }
+
+    fun updateLog(a: Int, b: Int ,c: Int,d: String){
     ktormDatabase.insertAndGenerateKey(DBLogsTable){
         set(DBLogsTable.materialid, a)
         set(DBLogsTable.userid, b)
         set(DBLogsTable.contractorid, c)
         set(DBLogsTable.type, d)
+        }
     }
-}
 
     fun removeMaterial(id: Int): Boolean{
         val deletedRows=ktormDatabase.delete(DBMaterialTable){
