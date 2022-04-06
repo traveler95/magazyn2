@@ -7,5 +7,6 @@ data class Log(
     val date: String,
     val materialid: Int,
     val userid: Int,
-    val contractorid: Int
+    val contractorid: Int,
+    val type: String
 )

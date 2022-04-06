@@ -57,8 +57,9 @@ class DatabaseManager {
             set(DBLogsTable.materialid, draft.materialid)
             set(DBLogsTable.userid, draft.userid)
             set(DBLogsTable.contractorid, draft.contractorid)
+            set(DBLogsTable.type, draft.type)
         }as Int
-        return LogDraft(draft.materialid, draft.userid, draft.contractorid)
+        return LogDraft(draft.materialid, draft.userid, draft.contractorid,draft.type)
     }
 
     fun updateMaterial(id: Int, draft: MaterialLogDraft): Boolean{
@@ -69,15 +70,16 @@ class DatabaseManager {
                 it.id eq id
             }
         }
-        updateLog(draft.userid,draft.materialid,draft.contractorid)
+        updateLog(draft.userid,draft.materialid,draft.contractorid,draft.type)
         return updatedRows>0
     }
 
-fun updateLog(a: Int, b: Int ,c: Int){
+fun updateLog(a: Int, b: Int ,c: Int,d: String){
     ktormDatabase.insertAndGenerateKey(DBLogsTable){
         set(DBLogsTable.materialid, a)
         set(DBLogsTable.userid, b)
         set(DBLogsTable.contractorid, c)
+        set(DBLogsTable.type, d)
     }
 }
 

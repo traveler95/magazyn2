@@ -13,7 +13,7 @@ class MySQLMaterialRepository: MaterialRepository {
     }
 
     override fun getAllLogs(): List<Log> {
-        return database.getAllLogs().map { Log(it.id, it.date, it.materialid, it.userid, it.contractorid)}
+        return database.getAllLogs().map { Log(it.id, it.date, it.materialid, it.userid, it.contractorid, it.type)}
     }
 
     override fun getMaterial(id: Int): Material? {
