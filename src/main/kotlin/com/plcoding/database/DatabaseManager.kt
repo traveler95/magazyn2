@@ -83,6 +83,26 @@ class DatabaseManager {
         return updatedRows>0
     }
 
+    fun releaseMaterial(id: Int, draft: MaterialLogReleaseDraft): Boolean{
+        val updatedRows = ktormDatabase.update(DBMaterialTable){
+            set(DBMaterialTable.qty, DBMaterialTable.qty-draft.qty)
+            where {
+                it.id eq id
+            }
+        }
+         updateLog(id, draft.userid, draft.contractorid,draft.type)
+        return updatedRows>0
+    }
+
+
+    fun updateLogOnDelivery(a: Int, b: Int ,c: Int,d: String){
+        ktormDatabase.insertAndGenerateKey(DBLogsTable){
+            set(DBLogsTable.materialid, a)
+            set(DBLogsTable.userid, b)
+            set(DBLogsTable.type, d)
+        }
+    }
+
     fun updateLog(a: Int, b: Int ,c: Int,d: String){
     ktormDatabase.insertAndGenerateKey(DBLogsTable){
         set(DBLogsTable.materialid, a)

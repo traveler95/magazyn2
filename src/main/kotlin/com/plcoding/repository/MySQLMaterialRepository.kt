@@ -41,6 +41,10 @@ class MySQLMaterialRepository: MaterialRepository {
         return database.updateMaterial(id,draft)
     }
 
+    override fun releaseMaterial(id: Int, draft: MaterialLogReleaseDraft): Boolean {
+        return database.releaseMaterial(id,draft)
+    }
+
     override fun materialDelivery(id: Int, draft: MaterialLogDeliveryDraft): Boolean {
         return database.materialDelivery(id,draft)
     }

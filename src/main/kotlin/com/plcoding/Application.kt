@@ -1,9 +1,6 @@
 package com.plcoding
 
-import com.plcoding.data.model.LogDraft
-import com.plcoding.data.model.MaterialDraft
-import com.plcoding.data.model.MaterialLogDeliveryDraft
-import com.plcoding.data.model.MaterialLogDraft
+import com.plcoding.data.model.*
 import io.ktor.application.*
 import com.plcoding.repository.MySQLMaterialRepository
 import com.plcoding.repository.MaterialRepository
@@ -131,6 +128,26 @@ fun Application.module() {
                 call.respond(HttpStatusCode.NotFound, "not found")
             }
         }
+
+
+        put("/wydanie/{id}") {
+            val materialDraft = call.receive<MaterialLogReleaseDraft>()
+            val materialId = call.parameters["id"]?.toIntOrNull()
+
+            if (materialId == null) {
+                call.respond(HttpStatusCode.BadRequest, "kokoko")
+                return@put
+            }
+            val updated = repository.releaseMaterial(materialId, materialDraft)
+            if (updated) {
+                call.response.header("Accept", "application/json")
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respond(HttpStatusCode.NotFound, "not found")
+            }
+        }
+
+
 
         delete("/material/{id}") {
             val todoId = call.parameters["id"]?.toIntOrNull()
