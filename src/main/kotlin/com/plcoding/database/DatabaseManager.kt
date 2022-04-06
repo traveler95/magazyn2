@@ -79,7 +79,7 @@ class DatabaseManager {
                 it.id eq id
             }
         }
-       // updateLog(draft.userid,draft.materialid,draft.contractorid,draft.type)
+        updateLogOnDelivery(id, draft.userid, draft.type, draft.qty)
         return updatedRows>0
     }
 
@@ -95,11 +95,12 @@ class DatabaseManager {
     }
 
 
-    fun updateLogOnDelivery(a: Int, b: Int ,c: Int,d: String){
+    fun updateLogOnDelivery(a: Int, b: Int ,c: String,d: Int){
         ktormDatabase.insertAndGenerateKey(DBLogsTable){
             set(DBLogsTable.materialid, a)
             set(DBLogsTable.userid, b)
-            set(DBLogsTable.type, d)
+            set(DBLogsTable.type, c)
+            set(DBLogsTable.qty, d)
         }
     }
 
