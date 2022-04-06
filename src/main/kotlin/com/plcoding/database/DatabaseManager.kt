@@ -67,7 +67,7 @@ class DatabaseManager {
                 it.id eq id
             }
         }
-        updateLog(draft.userid,draft.materialid,draft.contractorid,draft.type)
+        updateLog(draft.userid,draft.materialid,draft.contractorid,draft.type,draft.qty)
         return updatedRows>0
     }
 
@@ -90,7 +90,7 @@ class DatabaseManager {
                 it.id eq id
             }
         }
-         updateLog(id, draft.userid, draft.contractorid,draft.type)
+         updateLog(id, draft.userid, draft.contractorid,draft.type, draft.qty)
         return updatedRows>0
     }
 
@@ -103,12 +103,13 @@ class DatabaseManager {
         }
     }
 
-    fun updateLog(a: Int, b: Int ,c: Int,d: String){
+    fun updateLog(a: Int, b: Int ,c: Int,d: String, e: Int){
     ktormDatabase.insertAndGenerateKey(DBLogsTable){
         set(DBLogsTable.materialid, a)
         set(DBLogsTable.userid, b)
         set(DBLogsTable.contractorid, c)
         set(DBLogsTable.type, d)
+        set(DBLogsTable.qty, e)
         }
     }
 

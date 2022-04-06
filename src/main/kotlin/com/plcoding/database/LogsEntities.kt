@@ -13,6 +13,7 @@ object DBLogsTable: Table<DBLogsEntity>("logs"){
     val userid = int("userid").bindTo { it.userid }
     val contractorid = int("contractorid").bindTo { it.contractorid}
     val type = varchar("type").bindTo {  it.type }
+    val qty = int("qty").bindTo {  it.qty }
 
 }
 
@@ -27,5 +28,6 @@ interface DBLogsEntity: Entity<DBLogsEntity>{
     val userid: Int
     val contractorid: Int
     val type: String
+    val qty: Int
 
 }
