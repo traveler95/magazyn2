@@ -2,10 +2,7 @@ package com.plcoding.database
 
 import com.plcoding.data.model.*
 import org.ktorm.database.Database
-import org.ktorm.dsl.delete
-import org.ktorm.dsl.eq
-import org.ktorm.dsl.insertAndGenerateKey
-import org.ktorm.dsl.update
+import org.ktorm.dsl.*
 import org.ktorm.entity.firstOrNull
 import org.ktorm.entity.sequenceOf
 import org.ktorm.entity.toList
@@ -77,7 +74,7 @@ class DatabaseManager {
 
     fun materialDelivery(id: Int, draft: MaterialLogDeliveryDraft): Boolean{
         val updatedRows = ktormDatabase.update(DBMaterialTable){
-            set(DBMaterialTable.qty, draft.qty)
+            set(DBMaterialTable.qty, DBMaterialTable.qty+draft.qty)
             where {
                 it.id eq id
             }
