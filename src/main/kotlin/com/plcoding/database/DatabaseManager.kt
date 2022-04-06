@@ -41,12 +41,13 @@ class DatabaseManager {
     }
 
     fun addMaterial(draft: MaterialDraft): Material{
-        val insertedId = ktormDatabase.insertAndGenerateKey(DBMaterialTable){
+        val insertedId = ktormDatabase.insert(DBMaterialTable){
+            set(DBMaterialTable.id, draft.id)
             set(DBMaterialTable.name, draft.name)
             set(DBMaterialTable.qty, draft.qty)
             set(DBMaterialTable.sn, draft.sn)
         }as Int
-        return Material(insertedId, draft.name, draft.qty, draft.sn)
+        return Material(draft.id, draft.name, draft.qty, draft.sn)
     }
 
     fun addLog(draft: LogDraft): LogDraft {
