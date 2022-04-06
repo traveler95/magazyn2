@@ -44,6 +44,7 @@ class DatabaseManager {
         val insertedId = ktormDatabase.insertAndGenerateKey(DBMaterialTable){
             set(DBMaterialTable.name, draft.name)
             set(DBMaterialTable.qty, draft.qty)
+            set(DBMaterialTable.sn, draft.sn)
         }as Int
         return Material(insertedId, draft.name, draft.qty, draft.sn)
     }

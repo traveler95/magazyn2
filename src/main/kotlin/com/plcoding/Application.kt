@@ -82,7 +82,6 @@ fun Application.module() {
             val materialDraft = call.receive<MaterialDraft>()
             val todo = repository.addMaterial(materialDraft)
             call.response.header("Accept", "application/json")
-            call.response.header("Content-Type", "application/json")
             call.respond(todo)
         }
 
